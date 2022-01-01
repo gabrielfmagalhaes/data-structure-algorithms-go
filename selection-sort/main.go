@@ -6,7 +6,7 @@ func main() {
 	unsortedList := initUnsortedList()
 	sortedList := sortList(unsortedList)
 
-	printSortedList(sortedList)
+	printList(sortedList)
 }
 
 func initUnsortedList() map[string]int {
@@ -47,7 +47,7 @@ func findHigher(unsortedList map[string]int) (resultKey string, resultValue int)
 	return resultKey, resultValue
 }
 
-func printSortedList(sortedList map[string]int) {
+func printList(sortedList map[string]int) {
 	for key, value := range sortedList {
 		fmt.Printf("Artist: %s, amount of plays: %v\n", key, value)
 	}
