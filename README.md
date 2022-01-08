@@ -4,7 +4,7 @@ This is a repository dedicated to study, learn and solve Data Structure algorith
 - Binary Tree ✔
 - Selection Sort ✔
 - Recursion ✔
-- Quicksort
+- Quicksort ✔
 - Hash tables
 - Breadth-first search
 - Dijkstra's algorithm
