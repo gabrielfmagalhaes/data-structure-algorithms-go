@@ -8,6 +8,7 @@ func main() {
 	fmt.Printf("Result of the sum: %v\n", sumOf(numbers))
 	fmt.Printf("Result of the count: %v\n", countTotalItemsIn(numbers))
 	fmt.Printf("Result of the highest number: %v\n", highestNumberFrom(numbers))
+	fmt.Printf("Result of the sorted list: %v\n", sortOf(numbers))
 }
 
 func sumOf(numbers []int) int {
@@ -42,4 +43,36 @@ func highestNumberFrom(numbers []int) int {
 			return subMax
 		}
 	}
+}
+
+func sortOf(numbers []int) []int {
+	if len(numbers) < 2 {
+		return numbers
+	}
+
+	middle := []int{numbers[len(numbers)/2]}
+
+	firstHalf := numbers[:(len(numbers) / 2)]
+	secondHalf := numbers[(len(numbers)/2)+1:]
+
+	var lowers []int
+	var highers []int
+
+	for _, elem := range firstHalf {
+		if elem > middle[0] {
+			highers = append(highers, elem)
+		} else {
+			lowers = append(lowers, elem)
+		}
+	}
+
+	for _, elem := range secondHalf {
+		if elem > middle[0] {
+			highers = append(highers, elem)
+		} else {
+			lowers = append(lowers, elem)
+		}
+	}
+
+	return append(sortOf(lowers), append(middle, sortOf(highers)...)...)
 }
