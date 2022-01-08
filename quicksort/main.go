@@ -7,6 +7,7 @@ func main() {
 
 	fmt.Printf("Result of the sum: %v\n", sumOf(numbers))
 	fmt.Printf("Result of the count: %v\n", countTotalItemsIn(numbers))
+	fmt.Printf("Result of the highest number: %v\n", highestNumberFrom(numbers))
 }
 
 func sumOf(numbers []int) int {
@@ -22,5 +23,23 @@ func countTotalItemsIn(numbers []int) int {
 		return 1
 	} else {
 		return 1 + countTotalItemsIn(numbers[1:])
+	}
+}
+
+func highestNumberFrom(numbers []int) int {
+	if len(numbers) == 2 {
+		if numbers[0] > numbers[1] {
+			return numbers[0]
+		} else {
+			return numbers[1]
+		}
+	} else {
+		subMax := highestNumberFrom(numbers[1:])
+
+		if numbers[0] > subMax {
+			return numbers[0]
+		} else {
+			return subMax
+		}
 	}
 }
