@@ -2,53 +2,104 @@ package main
 
 import "fmt"
 
-func main() {
-	unsortedList := initUnsortedList()
-	sortedList := sortList(unsortedList)
+const ArraySize = 5
 
-	printList(sortedList)
+type HashTable struct {
+	array [ArraySize]*bucket
 }
 
-func initUnsortedList() map[string]int {
-	return map[string]int{"Gorillaz": 141,
-		"Bo Burnham":     234,
-		"Lil Nas X":      94,
-		"Kendrick Lamar": 88,
-		"David Bowie":    61,
-		"Elton John":     111}
+type bucket struct {
+	head *bucketNode
 }
 
-func sortList(unsortedList map[string]int) map[string]int {
-	sortedList := make(map[string]int)
-	listLength := len(unsortedList)
+type bucketNode struct {
+	key   string
+	value int
+	next  *bucketNode
+}
 
-	for i := 0; i < listLength; i++ {
-		higherKey, higherValue := findHigher(unsortedList)
+func Init() HashTable {
+	hashTable := HashTable{}
 
-		sortedList[higherKey] = higherValue
-
-		delete(unsortedList, higherKey)
+	for i := range hashTable.array {
+		hashTable.array[i] = &bucket{}
 	}
 
-	return sortedList
+	return hashTable
 }
 
-func findHigher(unsortedList map[string]int) (resultKey string, resultValue int) {
-	resultKey = ""
-	resultValue = -1
+func (h *HashTable) Insert(k string, v int) {
+	index := hash(k)
+	h.array[index].insert(k, v)
+}
 
-	for key, value := range unsortedList {
-		if resultValue < value {
-			resultValue = value
-			resultKey = key
+func (h *HashTable) Delete(k string) {
+	index := hash(k)
+	h.array[index].delete(k)
+}
+
+func (h *HashTable) Search(k string) bool {
+	index := hash(k)
+	return h.array[index].search(k)
+}
+
+func (b *bucket) insert(k string, v int) {
+	if !b.search(k) {
+		newNode := &bucketNode{key: k, value: v}
+		newNode.next = b.head
+
+		b.head = newNode
+	} else {
+		err := fmt.Errorf("Node %v not added because it is an existing key", k)
+		fmt.Println(err.Error())
+	}
+}
+
+func (b *bucket) search(k string) bool {
+	currentNode := b.head
+
+	for currentNode != nil {
+		if currentNode.key == k {
+			return true
 		}
+
+		currentNode = currentNode.next
 	}
 
-	return resultKey, resultValue
+	return false
 }
 
-func printList(sortedList map[string]int) {
-	for key, value := range sortedList {
-		fmt.Printf("Artist: %s, amount of plays: %v\n", key, value)
+func (b *bucket) delete(k string) {
+	previousNode := b.head
+
+	if b.head.key == k {
+		b.head = b.head.next
+		return
 	}
+
+	for previousNode.next != nil {
+		if previousNode.next.key == k {
+			previousNode.next = previousNode.next.next
+			return
+		}
+
+		previousNode = previousNode.next
+	}
+}
+
+func hash(key string) int {
+	sum := 0
+	for _, v := range key {
+		sum += int(v)
+	}
+	return sum % ArraySize
+}
+
+func main() {
+	hashTable := Init()
+	hashTable.Insert("Ana", 24)
+	hashTable.Insert("Eric", 13)
+	hashTable.Insert("Rebecca", 67)
+	hashTable.Insert("Marie", 53)
+	hashTable.Insert("D", 33)
 }
