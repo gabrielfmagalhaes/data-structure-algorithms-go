@@ -3,52 +3,35 @@ package main
 import "fmt"
 
 func main() {
-	unsortedList := initUnsortedList()
-	sortedList := sortList(unsortedList)
+	unsortedList := []int{141, 234, 94, 88, 61, 111}
 
-	printList(sortedList)
+	fmt.Printf("Sorted list: %v\n", sortListFrom(unsortedList))
 }
 
-func initUnsortedList() map[string]int {
-	return map[string]int{"Gorillaz": 141,
-		"Bo Burnham":     234,
-		"Lil Nas X":      94,
-		"Kendrick Lamar": 88,
-		"David Bowie":    61,
-		"Elton John":     111}
-}
+func sortListFrom(unsortedList []int) []int {
+	var sortedList []int
 
-func sortList(unsortedList map[string]int) map[string]int {
-	sortedList := make(map[string]int)
-	listLength := len(unsortedList)
+	for _, _ = range unsortedList {
+		highestIndex := highestNumberFrom(unsortedList)
 
-	for i := 0; i < listLength; i++ {
-		higherKey, higherValue := findHigher(unsortedList)
+		sortedList = append(sortedList, unsortedList[highestIndex])
 
-		sortedList[higherKey] = higherValue
-
-		delete(unsortedList, higherKey)
+		unsortedList = append(unsortedList[:highestIndex], unsortedList[highestIndex+1:]...)
 	}
 
 	return sortedList
 }
 
-func findHigher(unsortedList map[string]int) (resultKey string, resultValue int) {
-	resultKey = ""
-	resultValue = -1
+func highestNumberFrom(numbers []int) int {
+	highestNumber := numbers[0]
+	highestIndex := 0
 
-	for key, value := range unsortedList {
-		if resultValue < value {
-			resultValue = value
-			resultKey = key
+	for index, elem := range numbers {
+		if highestNumber < elem {
+			highestNumber = elem
+			highestIndex = index
 		}
 	}
 
-	return resultKey, resultValue
-}
-
-func printList(sortedList map[string]int) {
-	for key, value := range sortedList {
-		fmt.Printf("Artist: %s, amount of plays: %v\n", key, value)
-	}
+	return highestIndex
 }
