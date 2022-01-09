@@ -1,48 +1,75 @@
 package breadth_first_search
 
+import "fmt"
+
 type Graph struct {
-	Vertices []Vertex
-	Edges    []Edge
+	Vertices []*Vertex
 }
 
 func (g *Graph) AddVertex(person Person) {
-	vertex := Vertex{Person: person}
-
-	g.Vertices = append(g.Vertices, vertex)
+	if contains(g.Vertices, person) {
+		err := fmt.Errorf("Vertex %v not added because it is an existing key", person)
+		fmt.Println(err.Error())
+	} else {
+		g.Vertices = append(g.Vertices, &Vertex{Person: person})
+	}
 }
 
 func (g *Graph) AddEdge(personVisited, personNeighbor Person) {
-	indexVisited := g.getVertexPos(personVisited)
-	indexNeighbor := g.getVertexPos(personNeighbor)
+	fromVertex := g.getVertex(personVisited)
+	toVertex := g.getVertex(personNeighbor)
 
-	edge := Edge{g.Vertices[indexVisited], g.Vertices[indexNeighbor]}
+	if fromVertex == nil || toVertex == nil {
+		err := fmt.Errorf("Invalid edge (%v --> %v)", personVisited, personNeighbor)
+		fmt.Println(err.Error())
+	} else if contains(fromVertex.Adjacents, personNeighbor) {
+		err := fmt.Errorf("Existing edge (%v --> %v)", personVisited, personNeighbor)
+		fmt.Println(err.Error())
+	} else {
+		fromVertex.Adjacents = append(fromVertex.Adjacents, toVertex)
+	}
+}
 
-	g.Vertices[indexVisited].addEnterEdge(edge)
-	g.Vertices[indexVisited].addExitEdge(edge)
+func (g *Graph) getVertex(person Person) *Vertex {
+	for i, elem := range g.Vertices {
+		if elem.Person.Name == person.Name {
+			return g.Vertices[i]
+		}
+	}
 
-	g.Edges = append(g.Edges, edge)
+	return nil
+}
+
+func contains(v []*Vertex, person Person) bool {
+	for _, elem := range v {
+		if elem.Person.Name == person.Name {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (g *Graph) BreadthFirst() Person {
-	var visitedVertices []Vertex
-	var queueVertices []Vertex
+	var visitedVertices []*Vertex
+	var queueVertices []*Vertex
 
 	queueVertices = append(queueVertices, g.Vertices[0])
 
 	for len(queueVertices) > 0 {
 		visited := queueVertices[0]
 
-		for i := 0; i < len(visited.ExitEdges); i++ {
-			neighbor := visited.ExitEdges[i].ToVertex
+		for i := 0; i < len(visited.Adjacents); i++ {
+			neighbor := visited.Adjacents[i]
 
 			if doesHeEnjoyRock(neighbor.Person) {
 				return neighbor.Person
 			}
 
 			if !wasVertexAlreadyVisited(neighbor, visitedVertices) {
-				pos := g.getVertexPos(neighbor.Person)
+				findVertex := g.getVertex(neighbor.Person)
 
-				queueVertices = append(queueVertices, g.Vertices[pos])
+				queueVertices = append(queueVertices, findVertex)
 				visitedVertices = append(visitedVertices, neighbor)
 			}
 		}
@@ -52,17 +79,7 @@ func (g *Graph) BreadthFirst() Person {
 	return Person{}
 }
 
-func (g *Graph) getVertexPos(person Person) int {
-	for index, elem := range g.Vertices {
-		if elem.Person.Name == person.Name {
-			return index
-		}
-	}
-
-	return 0
-}
-
-func wasVertexAlreadyVisited(vertex Vertex, visitedVertices []Vertex) bool {
+func wasVertexAlreadyVisited(vertex *Vertex, visitedVertices []*Vertex) bool {
 	for _, elem := range visitedVertices {
 		if vertex.Person.Name == elem.Person.Name {
 			return true
