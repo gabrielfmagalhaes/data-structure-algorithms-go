@@ -5,7 +5,7 @@ This is a repository dedicated to study, learn and solve Data Structure algorith
 - Selection Sort ✔
 - Recursion ✔
 - Quicksort ✔
-- Hash tables
+- Hash tables ✔
 - Breadth-first search
 - Dijkstra's algorithm
 - Greedy algorithms
