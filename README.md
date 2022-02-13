@@ -1,17 +1,21 @@
-This is a repository dedicated to study, learn and solve Data Structure algorithms from Grokking Algorithms books
+This is a repository dedicated to study, learn and solve Data Structure algorithms from Grokking Algorithms books (not all) and a few others
 
 ### Contemplated problems ###
 - Divide and Conquer ✔
 - Binary Tree ✔
+- Binary Tree Search
 - Selection Sort ✔
 - Recursion ✔
 - Quicksort ✔
 - Hash tables ✔
-- Breadth-first search ✔
+- Breadth-First Search ✔
+- Depth First Search
 - Dijkstra's algorithm
-- Greedy algorithms
-- Dynamic programming
-- K-nearest neighbors
+- Heaps
+- Queues
+- Priority Queues
+- Tries
+- UnionFind
 
 #### Repos ####
 If you like, you can find a version of this repository written in Java [here](https://github.com/gabrielfmagalhaes/grokking-algorithms-java)
