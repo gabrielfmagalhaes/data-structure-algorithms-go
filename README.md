@@ -11,7 +11,7 @@ This is a repository dedicated to study, learn and solve Data Structure algorith
 - Breadth-First Search ✔
 - Depth First Search
 - Dijkstra's algorithm
-- Heaps
+- Heaps ✔
 - Queues
 - Priority Queues
 - Tries
