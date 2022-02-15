@@ -6,22 +6,22 @@ import (
 )
 
 type Heap struct {
-	size     int
-	elements []interface{}
+	size  int
+	items []interface{}
 }
 
 func Init(size int) Heap {
 	return Heap{
-		size:     size,
-		elements: make([]interface{}, size),
+		size:  size,
+		items: make([]interface{}, size),
 	}
 }
 
 func (h *Heap) Push(element interface{}) error {
-	if !isHeapFull(h.elements) {
-		for index := range h.elements {
-			if h.elements[index] == nil {
-				h.elements[index] = element
+	if !isHeapFull(h.items) {
+		for index := range h.items {
+			if h.items[index] == nil {
+				h.items[index] = element
 				return nil
 			}
 		}
@@ -31,11 +31,11 @@ func (h *Heap) Push(element interface{}) error {
 }
 
 func (h *Heap) Pop() (interface{}, error) {
-	if !isHeapEmpty(h.elements) {
-		for i := len(h.elements) - 1; i >= 0; i-- {
-			if h.elements[i] != nil {
-				poppedValue := h.elements[i]
-				h.elements[i] = nil
+	if !isHeapEmpty(h.items) {
+		for i := len(h.items) - 1; i >= 0; i-- {
+			if h.items[i] != nil {
+				poppedValue := h.items[i]
+				h.items[i] = nil
 
 				return poppedValue, nil
 			}
@@ -45,12 +45,12 @@ func (h *Heap) Pop() (interface{}, error) {
 	return nil, errors.New("Heap is empty")
 }
 
-func isHeapFull(elements []interface{}) bool {
-	return elements[len(elements)-1] != nil
+func isHeapFull(items []interface{}) bool {
+	return items[len(items)-1] != nil
 }
 
-func isHeapEmpty(elements []interface{}) bool {
-	return elements[0] == nil
+func isHeapEmpty(items []interface{}) bool {
+	return items[0] == nil
 }
 
 func main() {
