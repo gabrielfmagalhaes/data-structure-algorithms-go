@@ -12,7 +12,7 @@ This is a repository dedicated to study, learn and solve Data Structure algorith
 - Depth First Search
 - Dijkstra's algorithm
 - Heaps ✔
-- Queues
+- Queues ✔
 - Priority Queues
 - Tries
 - UnionFind
