@@ -14,7 +14,7 @@ var romans = map[string]int{
 	"M": 1000}
 
 func main() {
-	input := "MCMXCIV"
+	input := "MCMXCVII"
 
 	resultConverted := romanToInteger(input)
 
