@@ -18,6 +18,7 @@ This is a repository dedicated to study, learn and solve Data Structure algorith
 - UnionFind
 - Roman to Integer ✔
 - Validate Brackets "(), [], {}" ✔
+- Validate cycles in Linked List "(), [], {}" ✔
 
 #### Repos ####
 If you like, you can find a version of this repository written in Java [here](https://github.com/gabrielfmagalhaes/grokking-algorithms-java)
