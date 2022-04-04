@@ -1,6 +1,6 @@
 This is a repository dedicated to study, learn and solve Data Structure algorithms from Grokking Algorithms books (not all) and some from LeetCode
 
-### Contemplated problems ###
+### Contemplated algorithms ###
 - Divide and Conquer ✔
 - Binary Tree ✔
 - Binary Tree Search
